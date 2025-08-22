@@ -1,0 +1,42 @@
+Practica 1- Respuestas
+
+1.¿Cuáles son las principales diferencias entre Haskell y Java?
+
+Una de las principales diferencias son que Haskell es un lenguaje
+puramente funcional(osea que gira alrededor de funciones; los datos no
+cambian), mientrs que Java es un lenguaje orientado a objetos.
+
+Haskell tiene un sistema de tipos muy fuerte y adivina los tipos
+automaticamente y Java usa un tipado estatico.
+
+Haskell usa hilos ligeros ( mas faciles y eficientes de manejar) cosa
+que en Java son hilos normales (pueden generar problemas de
+sincronizacion.
+
+Algo muy bueno de Java es que su evalucion es inmediata cuando con
+Haskell solo las hace cuando hace falta.
+
+2. ¿Por qué Haskell no ha alcanzado una adopción significativa en la industria del software?
+
+ Por cuatro cosas, la primera por que es dificil de aprender; por que
+ es puramente funcional y muy distinta a lenguajes que son mas faciles
+ como Python o C++. Segunda por que este limitado en recursos; ya que
+ no cuenta con muchos tutoriales, cursos y materiales para
+ aprenderlo. Tercera por que sus herramientas estan limitadas; osea su
+ ecosistema es mas pequeño y menos maduro que otros lenguajes. En
+ conclusion no es masivo en la industria.
+
+3.Analogía simple entre Git y GitHub
+
+ Por lo que he aprendido Git es el programa y GitHub es la nube donde
+ se sube el codigo con Git.
+
+Bibliografia
+
+Haskell vs other programming languages A
+comparison. (n.d.). Haskell.dev. Retrieved August 22, 2025, from
+https://haskell.dev/article/Haskell_vs_other_programming_languages_A_comparison.html
+
+Is Haskell dead? (n.d.). Quora. Retrieved August 22, 2025, from https://www.quora.com/Is-Haskell-dead
+
+Why are people so down on Haskell? (n.d.). Quora. Retrieved August 22, 2025, from https://www.quora.com/Why-are-people-so-down-on-Haskell
