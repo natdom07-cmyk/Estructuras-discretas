@@ -29,3 +29,27 @@ concatenar (x:xs) ys = x : concatenar xs ys
 reversa :: [a] -> [a]
 reversa [] = []             
 reversa (x:xs) = concatenar (reversa xs) [x]
+
+{- 
+Tenemos que definir la estructura de un arbol binario, esta misma la podemos sacar como se definieron los arboles binarios
+en nuestra practica 6, usamos los metodos que nos proporciono el profesor
+-}
+
+data Arbol a = Vacio | AB a (Arbol a) (Arbol a) 
+  deriving (Eq, Ord, Show)
+
+{-
+ - Idea para definir un arbol binario de huffman, crear una funcion en la cual podamos crear Nodos, de huffman
+ Ademas de poder crear las hojas las cuales por definicion de como lo estamos viendo en el problema, tiene que tener la frecuencia
+ es decir la frecuencia en la cual se repiten los caracteres mas usados del texto a dar.
+ Ademas de tener la frecuencia tiene que tener el caracter. 
+ -En este caso de esa manera podriamos definir la hoja, aunque falta definir lo que es un nodo en este caso. 
+
+
+Posible estructura de lo anterior 
+data NodoHuffman = Hoja Char Int | Nodo Int  --Esto lo ponemos como una manera de poder definir lo de la idea
+    deriving(Eq, Show) -- Esto lo añadimos para poder imprimir y hacer una comparacion
+
+ -}
+
+ 
