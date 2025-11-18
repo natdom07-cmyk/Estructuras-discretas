@@ -127,19 +127,33 @@ ordenarPorFrecuencia (pivote:xs) =
     menores = ordenarPorFrecuencia (filtrarMenores pivote xs)
 
 {-
- - filtrarMayores: Filtra elementos con frecuencia mayor al pivote (elemento de referencia)
+ - filtrarMayores: Filtra elementos con frecuencia mayor al pivote
+ - CORRECCIÓN: Se usa snd para extraer la frecuencia y mantener el pivote original
+ - El error anterior era crear un nuevo pivote (c, freqPivote) en cada recursión
+ - usando el carácter del elemento actual, cuando debía mantenerse el pivote original
+ - Ahora pasamos el pivote completo y usamos snd para comparar frecuencias
  -}
 filtrarMayores :: (Char, Int) -> [(Char, Int)] -> [(Char, Int)]
-filtrarMayores _ [] = []
-filtrarMayores (_, freqPivote) ((c, f):xs)
-  | f > freqPivote = (c, f) : filtrarMayores (c, freqPivote) xs
-  | otherwise      = filtrarMayores (c, freqPivote) xs
+filtrarMayores pivote lista =
+  case lista of
+    [] -> []
+    (x:xs) ->
+      if snd x > snd pivote
+        then x : filtrarMayores pivote xs
+        else filtrarMayores pivote xs
 
 {-
- - filtrarMenores: Filtra elementos con frecuencia menor o igual al pivote (Esta funcion es lo contrario a la anterior)
+ - filtrarMenores: Filtra elementos con frecuencia menor o igual al pivote
+ - CORRECCIÓN: Se usa snd para extraer la frecuencia y mantener el pivote original
+ - El error anterior era crear un nuevo pivote (c, freqPivote) en cada recursión
+ - usando el carácter del elemento actual, cuando debía mantenerse el pivote original
+ - Ahora pasamos el pivote completo y usamos snd para comparar frecuencias
  -}
 filtrarMenores :: (Char, Int) -> [(Char, Int)] -> [(Char, Int)]
-filtrarMenores _ [] = []
-filtrarMenores (_, freqPivote) ((c, f):xs)
-  | f <= freqPivote = (c, f) : filtrarMenores (c, freqPivote) xs
-  | otherwise       = filtrarMenores (c, freqPivote) xs
+filtrarMenores pivote lista =
+  case lista of
+    [] -> []
+    (x:xs) ->
+      if snd x <= snd pivote
+        then x : filtrarMenores pivote xs
+        else filtrarMenores pivote xs
