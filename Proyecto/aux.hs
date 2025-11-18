@@ -30,26 +30,7 @@ reversa :: [a] -> [a]
 reversa [] = []             
 reversa (x:xs) = concatenar (reversa xs) [x]
 
-{- 
-Tenemos que definir la estructura de un arbol binario, esta misma la podemos sacar como se definieron los arboles binarios
-en nuestra practica 6, usamos los metodos que nos proporciono el profesor
-data Arbol a = Vacio | AB a (Arbol a) (Arbol a) 
-  deriving (Eq, Ord, Show)
--}
-
 {-
- - Idea para definir un arbol binario de huffman, crear una funcion en la cual podamos crear Nodos, de huffman
- Ademas de poder crear las hojas las cuales por definicion de como lo estamos viendo en el problema, tiene que tener la frecuencia
- es decir la frecuencia en la cual se repiten los caracteres mas usados del texto a dar.
- Ademas de tener la frecuencia tiene que tener el caracter. 
- -En este caso de esa manera podriamos definir la hoja, aunque falta definir lo que es un nodo en este caso. 
-
-
-Posible estructura de lo anterior 
-data NodoHuffman = Hoja Char Int | Nodo Int  --Esto lo ponemos como una manera de poder definir lo de la idea
-    deriving(Eq, Show) -- Esto lo añadimos para poder imprimir y hacer una comparacion
-
-
 ## Notas de Desarrollo
 
 ### Corrección de Enfoque 
@@ -118,3 +99,47 @@ tomarMientras pred (x:xs) | pred x    = x : tomarMientras pred xs | otherwise = 
 descartarMientras :: (a -> Bool) -> [a] -> [a]
 descartarMientras _ [] = []
 descartarMientras pred (x:xs) | pred x    = descartarMientras pred xs | otherwise = x:xs
+
+{-
+ - buscarEnTabla: Busca un elemento en una lista de tuplas (tabla de códigos)
+ - Esta funcion aux, nos ayudara a visualizar y analizar si un elemento si esta en la tabla o no.
+ -   tabla = [('A', "1"), ('B', "01"), ('C', "001")]
+ -   buscarEnTabla 'A' tabla  -- Just "1"
+ -   buscarEnTabla 'X' tabla  -- Nothing
+ -   buscarEnTabla 'B' tabla  -- Just "01"
+ -}
+buscarEnTabla :: Eq a => a -> [(a, b)] -> Maybe b
+buscarEnTabla _ [] = Nothing
+buscarEnTabla clave ((k, v):xs) | clave == k = Just v | otherwise  = buscarEnTabla clave xs
+
+{-
+ - ordenarPorFrecuencia: Ordena una lista de tuplas (Char, Int) por frecuencia DESCENDENTE ya que la variacion 
+    de huffman pide que sea asi
+ -   ordenarPorFrecuencia [('a', 3), ('b', 5), ('c', 1)]
+ -   Resultado: [('b', 5), ('a', 3), ('c', 1)]
+ -}
+ordenarPorFrecuencia :: [(Char, Int)] -> [(Char, Int)]
+ordenarPorFrecuencia [] = []
+ordenarPorFrecuencia (pivote:xs) = 
+  concatenar (concatenar mayores [pivote]) menores
+  where
+    mayores = ordenarPorFrecuencia (filtrarMayores pivote xs)
+    menores = ordenarPorFrecuencia (filtrarMenores pivote xs)
+
+{-
+ - filtrarMayores: Filtra elementos con frecuencia mayor al pivote (elemento de referencia)
+ -}
+filtrarMayores :: (Char, Int) -> [(Char, Int)] -> [(Char, Int)]
+filtrarMayores _ [] = []
+filtrarMayores (_, freqPivote) ((c, f):xs)
+  | f > freqPivote = (c, f) : filtrarMayores (c, freqPivote) xs
+  | otherwise      = filtrarMayores (c, freqPivote) xs
+
+{-
+ - filtrarMenores: Filtra elementos con frecuencia menor o igual al pivote (Esta funcion es lo contrario a la anterior)
+ -}
+filtrarMenores :: (Char, Int) -> [(Char, Int)] -> [(Char, Int)]
+filtrarMenores _ [] = []
+filtrarMenores (_, freqPivote) ((c, f):xs)
+  | f <= freqPivote = (c, f) : filtrarMenores (c, freqPivote) xs
+  | otherwise       = filtrarMenores (c, freqPivote) xs
