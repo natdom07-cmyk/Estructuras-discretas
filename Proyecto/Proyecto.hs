@@ -96,3 +96,34 @@ expandirHojaIzquierda (AB nodo Vacio Vacio) c f =
   in AB nuevoNodo (AB nuevaHoja Vacio Vacio) (AB nodo Vacio Vacio)
 expandirHojaIzquierda (AB nodo izq der) c f =
   AB nodo (expandirHojaIzquierda izq c f) der
+
+
+{-
+ - generarTablaCodigos: Genera tabla de códigos recorriendo el árbol
+ - Asigna '0' a rama izquierda, '1' a rama derecha
+ -}
+  generarTablaCodigos :: ArbolHuffman -> [(Char, String)]
+generarTablaCodigos arbol = generarCodigosAux arbol ""
+
+{-
+ - generarCodigosAux: Función auxiliar que acumula el código actual
+ - mientras recorre el árbol
+ -}
+generarCodigosAux :: ArbolHuffman -> String -> [(Char, String)]
+generarCodigosAux Vacio _ = []
+generarCodigosAux (AB (Hoja c _) Vacio Vacio) codigo = [(c, codigo)]
+generarCodigosAux (AB _ izq der) codigo = 
+  concatenar codigosIzq codigosDer
+  where
+    codigosIzq = generarCodigosAux izq (concatenar codigo "0")
+    codigosDer = generarCodigosAux der (concatenar codigo "1")
+
+{-
+ - obtenerCodigo: Busca el código de un carácter en la tabla
+ - Devuelve el código o cadena vacía si no se encuentra
+ -}
+obtenerCodigo :: Char -> [(Char, String)] -> String
+obtenerCodigo c tabla = 
+  case buscarEnTabla c tabla of
+    Just codigo -> codigo
+    Nothing -> ""
