@@ -30,6 +30,14 @@ reversa :: [a] -> [a]
 reversa [] = []             
 reversa (x:xs) = concatenar (reversa xs) [x]
 
+
+{- 
+Tenemos que definir la estructura de un arbol binario, esta misma la podemos sacar como se definieron los arboles binarios
+en nuestra practica 6, usamos los metodos que nos proporciono el profesor (En un commit anterior bore la definicion de arbol binario)
+-}
+data Arbol a = Vacio | AB a (Arbol a) (Arbol a) 
+    deriving (Eq, Ord, Show)
+
 {-
 ## Notas de Desarrollo
 
