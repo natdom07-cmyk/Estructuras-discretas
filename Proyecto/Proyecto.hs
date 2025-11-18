@@ -154,3 +154,31 @@ codificarSolo :: String -> String
 codificarSolo texto = textoCodificado
   where
     (textoCodificado, _, _) = codificar texto
+
+ {-
+ - decodificar: Convierte binario a texto usando árbol de Huffman
+ - Recorre árbol según bits: '0'=izquierda, '1'=derecha
+ - Al llegar a hoja: guarda carácter y vuelve a raíz
+ -}
+decodificar :: ArbolHuffman -> String -> String
+decodificar arbol bits = decodificarAux arbol arbol bits
+
+{-
+ - decodificarAux: Función auxiliar que mantiene referencia al árbol original
+ - y al nodo actual mientras recorre los bits
+ - 
+ - Parámetros:
+ - - arbolOriginal: árbol completo (para volver a la raíz)
+ - - nodoActual: posición actual en el árbol
+ - - bits: cadena de bits por procesar
+ -}
+decodificarAux :: ArbolHuffman -> ArbolHuffman -> String -> String
+decodificarAux _ Vacio _ = ""
+decodificarAux _ (AB (Hoja c _) Vacio Vacio) [] = [c]
+decodificarAux arbolOriginal (AB (Hoja c _) Vacio Vacio) bits = 
+  concatenar [c] (decodificarAux arbolOriginal arbolOriginal bits)
+decodificarAux arbolOriginal (AB _ izq der) (bit:bits)
+  | bit == '0' = decodificarAux arbolOriginal izq bits
+  | bit == '1' = decodificarAux arbolOriginal der bits
+  | otherwise  = ""
+decodificarAux _ _ [] = ""
