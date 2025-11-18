@@ -53,3 +53,46 @@ contarGrupos (grupo:grupos) =
   case grupo of
     [] -> contarGrupos grupos
     (x:_) -> (x, longitud grupo) : contarGrupos grupos
+
+
+{-
+ - construirArbolHuffman: Construye árbol expandiendo hoja izquierda más profunda
+ - Proceso: ordenar frecuencias → tomar primer elemento → expandir secuencialmente
+ -}
+construirArbolHuffman :: String -> ArbolHuffman
+construirArbolHuffman texto = 
+  case frecuencias of
+    [] -> Vacio
+    [(c, f)] -> AB (Hoja c f) Vacio Vacio
+    (primero:resto) -> insertarSecuencial resto arbolInicial
+      where
+        arbolInicial = AB (Hoja (fst primero) (snd primero)) Vacio Vacio
+  where
+    frecuencias = calcularFrecuencias texto
+
+{-
+ - insertarSecuencial: Inserta cada carácter secuencialmente en el árbol
+ - expandiendo siempre la hoja más a la izquierda y profunda
+ -}
+insertarSecuencial :: [(Char, Int)] -> ArbolHuffman -> ArbolHuffman
+insertarSecuencial [] arbol = arbol
+insertarSecuencial ((c, f):resto) arbol = 
+  insertarSecuencial resto arbolExpandido
+  where
+    arbolExpandido = expandirHojaIzquierda arbol c f
+
+{-
+ - expandirHojaIzquierda: Encuentra y expande la hoja más a la izquierda y profunda
+ - La hoja encontrada se reemplaza por un nodo con:
+ -   - Izquierda: nueva hoja con el carácter a insertar
+ -   - Derecha: la hoja original
+ -}
+expandirHojaIzquierda :: ArbolHuffman -> Char -> Int -> ArbolHuffman
+expandirHojaIzquierda Vacio c f = AB (Hoja c f) Vacio Vacio
+expandirHojaIzquierda (AB nodo Vacio Vacio) c f =
+  let frecuenciaNueva = obtenerFrecuencia nodo + f
+      nuevaHoja = Hoja c f
+      nuevoNodo = Nodo frecuenciaNueva
+  in AB nuevoNodo (AB nuevaHoja Vacio Vacio) (AB nodo Vacio Vacio)
+expandirHojaIzquierda (AB nodo izq der) c f =
+  AB nodo (expandirHojaIzquierda izq c f) der
