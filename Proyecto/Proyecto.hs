@@ -127,3 +127,30 @@ obtenerCodigo c tabla =
   case buscarEnTabla c tabla of
     Just codigo -> codigo
     Nothing -> ""
+
+{-
+ - codificar: Convierte texto a binario usando codificación Huffman
+ - Retorna tabla con: texto comprimido, árbol generado y tabla de códigos
+ -}
+codificar :: String -> (String, ArbolHuffman, [(Char, String)])
+codificar texto = (textoCodificado, arbol, tabla)
+  where
+    arbol = construirArbolHuffman texto
+    tabla = generarTablaCodigos arbol
+    textoCodificado = codificarTexto texto tabla
+
+{-
+ - codificarTexto: Convierte cada carácter del texto a su código binario
+ -}
+codificarTexto :: String -> [(Char, String)] -> String
+codificarTexto [] _ = ""
+codificarTexto (c:cs) tabla = 
+  concatenar (obtenerCodigo c tabla) (codificarTexto cs tabla)
+
+{-
+ - codificarSolo: Versión simplificada que solo retorna el texto codificado
+ -}
+codificarSolo :: String -> String
+codificarSolo texto = textoCodificado
+  where
+    (textoCodificado, _, _) = codificar texto
