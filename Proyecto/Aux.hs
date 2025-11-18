@@ -51,7 +51,7 @@ pero el proyecto requiere una variación de lo de huffman donde:
 - Se expande siempre la hoja más a la izquierda y profunda
  -}
 
- data NodoHuffman = Hoja Char Int | Nodo Int
+data NodoHuffman = Hoja Char Int | Nodo Int
     deriving (Eq, Show)
 
 {-
