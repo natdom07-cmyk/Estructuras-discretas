@@ -51,6 +51,9 @@ Se muestra:
 - Comparación entre ambos
 
 ---
+## Tiempo requerido 
+
+Tarde aproximadamente 4 dias en entenderlo, comprender y hacerlo.
 
 ## Ejecución
 
@@ -59,9 +62,10 @@ El proyecto contiene dos ejemplos principales:
 ```haskell
 ejemplo1
 ejemplo2
+## Tiempo requerido 
 
 ---
 
-## Tiempo Requerido
 
-Tarde aproximadamente 2 dia en hacerlo.
+
+
